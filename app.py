@@ -1,10 +1,15 @@
+import os
 from flask import Flask, render_template, request
 import requests
+from dotenv import load_dotenv
+
+# Load environment variables from .env
+load_dotenv()
+
+API_KEY = os.getenv("WEATHER_API_KEY")  # Securely load WeatherAPI key
+FALLBACK_IMAGE = "https://via.placeholder.com/800x600?text=No+Image+Available"
 
 app = Flask(__name__)
-
-API_KEY = "466013cd633c4744839124806242212"  # WeatherAPI key
-FALLBACK_IMAGE = "https://via.placeholder.com/800x600?text=No+Image+Available"
 
 @app.route('/', methods=['GET', 'POST'])
 def home():
