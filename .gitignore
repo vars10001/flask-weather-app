@@ -1,0 +1,30 @@
+# Python cache files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual environment
+venv/
+env/
+.venv/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Flask instance folder (if you have one)
+instance/
+
+# Environment variables
+.env
+
+# PyCharm or VSCode project files
+.idea/
+.vscode/
+
+# SQLite database files (if any)
+*.db
