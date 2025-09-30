@@ -28,3 +28,5 @@ instance/
 
 # SQLite database files (if any)
 *.db
+
+.env
