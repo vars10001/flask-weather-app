@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather App</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Weather App</h1>
+
+        <!-- Search Form -->
+        <form method="POST" autocomplete="off" class="search-form">
+            <input type="text" id="city-input" name="city" placeholder="Enter city name" required value="{{ city if city }}">
+            <div id="suggestions" class="suggestions"></div>
+            <button type="submit">Get Weather</button>
+        </form>
+
+        <!-- Weather Information -->
+        {% if weather_data %}
+            {% if 'error' in weather_data %}
+                <p class="error">{{ weather_data.error }}</p>
+            {% else %}
+                <div class="weather-info">
+                    <h2>{{ weather_data.location.name }}, {{ weather_data.location.region }}, {{ weather_data.location.country }}</h2>
+                    <p>Temperature: {{ weather_data.current.temp_c }}°C</p>
+                    <p>Condition: {{ weather_data.current.condition.text }}</p>
+                    <p>Humidity: {{ weather_data.current.humidity }}%</p>
+                    <p>Wind Speed: {{ weather_data.current.wind_kph }} kph</p>
+                    <img src="http:{{ weather_data.current.condition.icon }}" alt="Weather Icon">
+                </div>
+
+                <!-- Wikipedia Image -->
+                {% if city_image_url %}
+                <div class="city-image">
+                    <h3>Wikipedia view of {{ city }}:</h3>
+                    <a href="{{ city_image_source }}" target="_blank">
+                        <img src="{{ city_image_url }}" alt="City Image">
+                    </a>
+                    <p class="source-text">Source: <a href="{{ city_image_source }}" target="_blank">Wikipedia</a></p>
+                </div>
+                {% endif %}
+            {% endif %}
+        {% endif %}
+    </div>
+
+    <!-- Autocomplete Script -->
+    <script>
+        const cityInput = document.getElementById("city-input");
+        const suggestionsBox = document.getElementById("suggestions");
+
+        cityInput.addEventListener("input", async () => {
+            const query = cityInput.value.trim();
+            if (query.length < 2) {
+                suggestionsBox.innerHTML = "";
+                return;
+            }
+
+            const res = await fetch(`/suggest?q=${query}`);
+            const data = await res.json();
+
+            suggestionsBox.innerHTML = "";
+            (data.suggestions || []).forEach(city => {
+                const div = document.createElement("div");
+                div.textContent = city;
+                div.classList.add("suggestion-item");
+                div.addEventListener("click", () => {
+                    cityInput.value = city;
+                    suggestionsBox.innerHTML = "";
+                });
+                suggestionsBox.appendChild(div);
+            });
+        });
+    </script>
+</body>
+</html>

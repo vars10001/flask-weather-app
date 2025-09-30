@@ -1,0 +1,87 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #0b0b0b;
+    color: #eee;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+}
+
+/* Container */
+.container {
+    width: 90%;
+    max-width: 500px;
+    background-color: #111;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+    border: 1px solid #222;
+    margin-top: 40px;
+    position: relative; /* needed for suggestions positioning */
+}
+
+/* Search Form */
+.search-form {
+    position: relative;
+}
+
+/* Input field */
+input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    margin: 0;
+    border-radius: 6px;
+    border: 1px solid #333;
+    background-color: #222;
+    color: #eee;
+    display: block;
+}
+
+/* Button */
+button {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px; /* space between input and button */
+    border-radius: 6px;
+    border: 1px solid #333;
+    background-color: #222;
+    color: #eee;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+button:hover {
+    background-color: #333;
+}
+
+/* Suggestions box */
+.suggestions {
+    background-color: #222;
+    border: 1px solid #333;
+    border-radius: 6px;
+    max-height: 150px;
+    overflow-y: auto;
+    position: absolute;
+    top: 100%; /* directly below input */
+    left: 0;
+    width: 100%;
+    z-index: 10;
+    box-sizing: border-box; /* prevent overflow */
+}
+
+/* Each suggestion item */
+.suggestion-item {
+    padding: 8px;
+    cursor: pointer;
+    white-space: nowrap; /* prevents long line wrapping */
+    text-overflow: ellipsis; /* cut overflow text */
+    overflow: hidden;
+}
+
+.suggestion-item:hover {
+    background-color: #333;
+}
+
